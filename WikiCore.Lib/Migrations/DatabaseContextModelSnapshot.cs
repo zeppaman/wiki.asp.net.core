@@ -28,7 +28,7 @@ namespace WikiCore.Lib.Migrations
 
                     b.HasKey("Slug");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("WikiPages");
                 });
 #pragma warning restore 612, 618
         }

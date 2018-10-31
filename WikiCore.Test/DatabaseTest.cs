@@ -67,7 +67,7 @@ namespace WikiCore.Test
             {
                 db.Database.Migrate();
 
-                db.Blogs.Add(new Lib.DAL.Model.WikiPageEntity()
+                db.WikiPages.Add(new Lib.DAL.Model.WikiPageEntity()
                 {
                     Title = "title",
                     Body = "#h1",
@@ -77,7 +77,7 @@ namespace WikiCore.Test
 
                 db.SaveChanges();
 
-                var count=db.Blogs.Where(x => x.Slug == "slug").Count();
+                var count=db.WikiPages.Where(x => x.Slug == "slug").Count();
 
                 Assert.Equal(1, count);
             }

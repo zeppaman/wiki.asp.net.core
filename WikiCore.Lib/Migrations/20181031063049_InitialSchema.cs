@@ -2,12 +2,12 @@
 
 namespace WikiCore.Lib.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialSchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Blogs",
+                name: "WikiPages",
                 columns: table => new
                 {
                     Version = table.Column<int>(nullable: false),
@@ -17,14 +17,14 @@ namespace WikiCore.Lib.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Blogs", x => x.Slug);
+                    table.PrimaryKey("PK_WikiPages", x => x.Slug);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Blogs");
+                name: "WikiPages");
         }
     }
 }

@@ -8,8 +8,8 @@ using WikiCore.Lib.DAL;
 namespace WikiCore.Lib.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20181030183316_Initial")]
-    partial class Initial
+    [Migration("20181031063049_InitialSchema")]
+    partial class InitialSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,7 +30,7 @@ namespace WikiCore.Lib.Migrations
 
                     b.HasKey("Slug");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("WikiPages");
                 });
 #pragma warning restore 612, 618
         }

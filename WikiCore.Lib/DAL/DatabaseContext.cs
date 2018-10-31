@@ -13,7 +13,7 @@ namespace WikiCore.Lib.DAL
             : base(options)
         { }
 
-        public DbSet<WikiPageEntity> Blogs { get; set; }
+        public DbSet<WikiPageEntity> WikiPages { get; set; }
     }
 
 

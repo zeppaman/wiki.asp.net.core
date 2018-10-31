@@ -9,6 +9,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper.Configuration;
+using WikiCore.Lib.BLL.BO;
 
 namespace WikiCore.Test
 {
@@ -37,6 +38,24 @@ namespace WikiCore.Test
             Assert.Equal("title", result.Title);
             Assert.Equal(1, result.Version);
             Assert.Equal("<h1>prova h1</h1>", result.BodyHtml);
+
+
+        }
+
+
+
+        [Fact]
+        public void BOToDEntity()
+        {
+            WikiPageBO source = new WikiPageBO()
+            {
+                BodyMarkDown = "# prova h1",
+                Title = "title prova"
+            };
+
+            var result = Mapper.Map<WikiPageEntity>(source);
+            Assert.Equal(source.Title, result.Title);
+            Assert.Equal("title-prova", result.Slug);
 
 
         }
