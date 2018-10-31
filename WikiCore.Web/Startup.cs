@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using WikiCore.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WikiCore.Lib.DAL;
+using WikiCore.Lib.BLL;
+using AutoMapper;
 
 namespace WikiCore
 {
@@ -34,13 +37,17 @@ namespace WikiCore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<DatabaseContext>();
+            services.AddAutoMapper();
+            services.AddScoped<IWikiPageService, DatabaseWikiPageService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +72,11 @@ namespace WikiCore
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                   name: "wiki",
+                   template: "wiki/{slug}/{action=View}",
+                   defaults:new { controller = "Wiki" });
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

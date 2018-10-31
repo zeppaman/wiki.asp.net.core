@@ -18,4 +18,8 @@
     <PackageReference Include="Slugify" Version="0.1.0.20570" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WikiCore.Lib\WikiCore.Lib.csproj" />
+  </ItemGroup>
+
 </Project>

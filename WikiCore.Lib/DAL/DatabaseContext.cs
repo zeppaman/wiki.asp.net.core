@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using WikiCore.Lib.DAL.Model;
 
 namespace WikiCore.Lib.DAL
 {
-    public class DatabaseContext:DbContext
+    public class DatabaseContext: IdentityDbContext
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
