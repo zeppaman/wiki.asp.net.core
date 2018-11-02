@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,15 @@ namespace WikiCore.Lib.BLL
             var itemToSave = mapper.Map<WikiPageEntity>(item);
             var count = db.WikiPages.Where(x => x.Slug == itemToSave.Slug).Count();
             itemToSave.Version = count + 1;
-            db.WikiPages.Add(itemToSave);
+            if (count == 0)
+            {
+                db.WikiPages.Add(itemToSave);
+            }
+            else
+            {
+                var ent=db.WikiPages.Attach(itemToSave);
+                ent.State = EntityState.Modified;
+            }
             db.SaveChanges();
             return mapper.Map<WikiPageDTO>(itemToSave);
         }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WikiCore.Lib.BLL;
+using WikiCore.Lib.BLL.BO;
 using WikiCore.Lib.DAL;
 using WikiCore.Lib.DTO;
 using WikiCore.Models;
@@ -37,7 +38,8 @@ namespace WikiCore.Controllers
 
             var model = new WikiPageModel()
             {
-                WikiPage = page
+                WikiPage = page,
+                EditUrl=Request.Scheme+"://"+(Request.Host+Request.Path+"/edit").Replace("//","/")
             };
 
             return View(model);
@@ -47,21 +49,40 @@ namespace WikiCore.Controllers
         public IActionResult Edit(string slug)
         {
             WikiPageDTO page = service.GetPage(slug);
-            WikiPageModel model = null;
-            
+            WikiPageEditModel model = null;
+
 
             if (page == null)
             {
-                model = new WikiPageModel()
+                model = new WikiPageEditModel()
                 {
-                    WikiPage = new WikiPageDTO
-                    {
-                        Slug=slug,
-                        Title=slug
-                    }
+                    Title = slug,
+                    Markdown = "## " + slug
                 };
             }
+            else
+            {
+                model = new WikiPageEditModel()
+                {
+                    Title = page.Title,
+                    Markdown = page.BodyMarkDown
+                };
+
+            }
             return View(model);
+        }
+
+        public IActionResult Save(WikiPageEditModel item)
+        {
+            WikiPageBO bo = new WikiPageBO()
+            {
+                Title = item.Title,
+                BodyMarkDown = item.Markdown
+            };
+
+            WikiPageDTO page = service.Save(bo);
+
+            return Redirect("/wiki/" + page.Slug);
         }
     }
 }

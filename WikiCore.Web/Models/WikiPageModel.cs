@@ -9,5 +9,6 @@ namespace WikiCore.Models
     public class WikiPageModel
     {
       public   WikiPageDTO WikiPage { get; set; }
+      public string EditUrl { get; set; }
     }
 }

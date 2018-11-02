@@ -1,5 +1,35 @@
-﻿@{
+﻿@model WikiPageEditModel
+
+@{
     ViewData["Title"] = "Edit View";
 }
 
-<h1> Edit View </h1>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+<h1> Edit @Model.Title </h1>
+
+<form asp-controller="Wiki" asp-action="Save" method="post">
+
+    <div class="form-group">
+        <label for="Title">Title</label>
+        <input asp-for="Title" placeholder="Title" class="form-control" />
+        <small id="titleHelp" class="form-text text-muted">Enter Title.</small>
+    </div>
+
+
+    <div class="form-group">
+        <label for="Markdown">Password</label>
+        <textarea asp-for="Markdown"></textarea><br />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+
+
+
+
+<script>
+    var simplemde = new SimpleMDE({ element: document.getElementById("Markdown") });
+</script>
