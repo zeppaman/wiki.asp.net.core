@@ -23,7 +23,7 @@ namespace WikiCore.Lib.BLL
         }
         public WikiPageDTO GetPage(string slug)
         {
-            var entity=db.WikiPages.Where(x => x.Slug == slug).OrderByDescending(z => z.Version).SingleOrDefault();
+            var entity=db.WikiPages.Where(x => x.Slug == slug).OrderByDescending(z => z.Version).Take(1).SingleOrDefault();
             return mapper.Map<WikiPageDTO>(entity);
         }
 
@@ -38,15 +38,15 @@ namespace WikiCore.Lib.BLL
             var itemToSave = mapper.Map<WikiPageEntity>(item);
             var count = db.WikiPages.Where(x => x.Slug == itemToSave.Slug).Count();
             itemToSave.Version = count + 1;
-            if (count == 0)
-            {
+            //if (count == 0)
+            //{
                 db.WikiPages.Add(itemToSave);
-            }
-            else
-            {
-                var ent=db.WikiPages.Attach(itemToSave);
-                ent.State = EntityState.Modified;
-            }
+            //}
+            //else
+            //{
+            //    var ent=db.WikiPages.Attach(itemToSave);
+            //    ent.State = EntityState.Modified;
+            //}
             db.SaveChanges();
             return mapper.Map<WikiPageDTO>(itemToSave);
         }

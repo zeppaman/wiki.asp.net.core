@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WikiCore.Lib.Migrations
 {
-    public partial class Identity : Migration
+    public partial class keyfix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,21 @@ namespace WikiCore.Lib.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WikiPages",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Version = table.Column<int>(nullable: false),
+                    Slug = table.Column<string>(nullable: true),
+                    Body = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WikiPages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,6 +203,12 @@ namespace WikiCore.Lib.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WikiPages_Slug_Version",
+                table: "WikiPages",
+                columns: new[] { "Slug", "Version" },
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -206,6 +227,9 @@ namespace WikiCore.Lib.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "WikiPages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

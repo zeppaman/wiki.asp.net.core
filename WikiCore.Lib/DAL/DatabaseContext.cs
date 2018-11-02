@@ -15,6 +15,13 @@ namespace WikiCore.Lib.DAL
         { }
 
         public DbSet<WikiPageEntity> WikiPages { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<WikiPageEntity>()
+                .HasIndex(p => new { p.Slug, p.Version }).IsUnique();
+        }
     }
 
 
@@ -24,6 +31,7 @@ namespace WikiCore.Lib.DAL
         {
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
             optionsBuilder.UseSqlite("Data Source=blog.db");
+
 
             return new DatabaseContext(optionsBuilder.Options);
         }

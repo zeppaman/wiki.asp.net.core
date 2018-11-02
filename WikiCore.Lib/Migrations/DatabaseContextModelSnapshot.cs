@@ -175,16 +175,21 @@ namespace WikiCore.Lib.Migrations
 
             modelBuilder.Entity("WikiCore.Lib.DAL.Model.WikiPageEntity", b =>
                 {
-                    b.Property<string>("Slug")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Body");
+
+                    b.Property<string>("Slug");
 
                     b.Property<string>("Title");
 
                     b.Property<int>("Version");
 
-                    b.HasKey("Slug");
+                    b.HasKey("Id");
+
+                    b.HasIndex("Slug", "Version")
+                        .IsUnique();
 
                     b.ToTable("WikiPages");
                 });

@@ -9,8 +9,8 @@ using WikiCore.Lib.DAL;
 namespace WikiCore.Lib.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20181031064659_Identity")]
-    partial class Identity
+    [Migration("20181102183336_keyfix")]
+    partial class keyfix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -177,16 +177,21 @@ namespace WikiCore.Lib.Migrations
 
             modelBuilder.Entity("WikiCore.Lib.DAL.Model.WikiPageEntity", b =>
                 {
-                    b.Property<string>("Slug")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Body");
+
+                    b.Property<string>("Slug");
 
                     b.Property<string>("Title");
 
                     b.Property<int>("Version");
 
-                    b.HasKey("Slug");
+                    b.HasKey("Id");
+
+                    b.HasIndex("Slug", "Version")
+                        .IsUnique();
 
                     b.ToTable("WikiPages");
                 });
