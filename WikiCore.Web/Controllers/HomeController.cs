@@ -4,15 +4,23 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WikiCore.Lib.BLL;
 using WikiCore.Models;
 
 namespace WikiCore.Controllers
 {
     public class HomeController : Controller
     {
+        IWikiPageService service;
+        public HomeController(IWikiPageService service)
+        {
+            this.service = service;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var result=service.GetAllPages(null, 0, int.MaxValue);
+            return View(result);
         }
         
         public IActionResult Privacy()

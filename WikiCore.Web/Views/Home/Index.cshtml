@@ -1,5 +1,57 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@using PagedList;
+@using WikiCore.Lib.DTO;
+@model IPagedList<WikiPageDTO>;
 <h1> Wiki Page</h1>
+
+
+<form asp-controller="Wiki" asp-action="Save" method="post">
+
+    <div class="form-group">
+        <label for="Title">New Page</label>
+        <input placeholder="Title" class="form-control newtitle" />
+        <small id="titleHelp" class="form-text text-muted">Enter Title.</small>
+    </div>
+
+
+    <button type="button" class="btn btn-primary" onclick="gotoEdit();">Save</button>
+</form>
+
+<div id="pages">
+    <input class="search" placeholder="Search" />
+    <ul class="list">
+        @foreach (var item in Model)
+        {
+            <li data-slug="@item.Slug" onclick="gotoView(this);">
+                <h3 class="title">@item.Title</h3>
+                <p class="body">@Html.Raw(item.BodyHtml.Substring(0, 30))</p>
+
+            </li>
+        }
+    </ul>
+ </div>
+
+    <script>
+
+        function gotoEdit() {
+            var newtitle = $(".newtitle").val;
+            var url = document.location + "/" + newtitle + "/edit";
+            document.location.href = url;
+        }
+
+        function gotoView(element) {
+            var slug = $(element).data("slug");
+            var url = document.location + "/" + newtitle;
+            document.location.href = url;
+        }
+
+        var options = {
+            valueNames: ['title', 'body']
+        };
+
+        var userList = new List('pages', options);
+    </script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>

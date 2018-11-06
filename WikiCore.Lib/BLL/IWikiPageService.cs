@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using WikiCore.Lib.BLL.BO;
@@ -11,5 +12,6 @@ namespace WikiCore.Lib.BLL
         WikiPageDTO GetPage(string slug);
         WikiPageDTO GetPageRevision(string slug, int version);
         WikiPageDTO Save(WikiPageBO item);
+        IPagedList<WikiPageDTO> GetAllPages(string search, int start, int size);
     }
 }
