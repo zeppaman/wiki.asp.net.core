@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace WikiCore.Lib.Utilities
 {
@@ -31,6 +32,12 @@ namespace WikiCore.Lib.Utilities
             Markdown mark = new Markdown(options);
             return mark.Transform(input);
 
+        }
+
+
+        public static string StripHTML(string input)
+        {
+            return Regex.Replace(input, "<.*?>", String.Empty);
         }
     }
 }
